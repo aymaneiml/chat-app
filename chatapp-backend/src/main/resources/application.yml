@@ -12,7 +12,7 @@ spring:
 server:
   port: 8080
 
-#Pourquoi les lignes springdoc: ? Elles ne sont pas obligatoires (Springdoc fonctionne avec des valeurs par defaut), mais les expliciter te permet de savoir exactement ou trouver l'interface (/swagger-ui.html) et la spec JSON brute (/v3/api-docs) plutot que de deviner.
+#Pourquoi les lignes springdoc : ? Elles ne sont pas obligatoires (Springdoc fonctionne avec des valeurs par defaut), mais les expliciter te permet de savoir exactement ou trouver l'interface (/swagger-ui.html) et la spec JSON brute (/v3/api-docs) plutot que de deviner.
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
