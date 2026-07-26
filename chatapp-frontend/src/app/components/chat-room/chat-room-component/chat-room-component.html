@@ -1,0 +1,18 @@
+<p>Statut : {{ connectionStatus }}</p>
+
+<div>
+  <div *ngFor="let message of messages">
+    <ng-container [ngSwitch]="message.type">
+      <em *ngSwitchCase="'JOIN'">{{ message.sender }} a rejoint le salon</em>
+      <em *ngSwitchCase="'LEAVE'">{{ message.sender }} a quitté le salon</em>
+      <span *ngSwitchDefault><strong>{{ message.sender }} :</strong> {{ message.content }}</span>
+    </ng-container>
+  </div>
+</div>
+
+<input
+  [(ngModel)]="newMessageContent"
+  (keyup.enter)="sendMessage()"
+  placeholder="Écris un message..."
+/>
+<button (click)="sendMessage()">Envoyer</button>

@@ -1,1 +1,5 @@
-<p>room-selector-component works!</p>
+<ul>
+    <li *ngFor="let room of rooms">
+        <button (click)="selectRoom(room)">{{ room }}</button>
+    </li>
+</ul>

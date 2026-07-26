@@ -11,6 +11,6 @@ export class RoomHistoryService {
   constructor(private http:HttpClient){}
 
   getHistory(roomId: string): Observable<ChatMessage[]>{
-    return this.http.get<ChatMessage[]>(`/api/room/${roomId}/messages`);
+    return this.http.get<ChatMessage[]>(`/api/rooms/${roomId}/messages`);
   }
 }
