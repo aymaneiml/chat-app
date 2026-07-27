@@ -1,0 +1,64 @@
+name: chatApp-WebSocket
+
+networks:
+  public-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.22.0.0/24
+  private-net:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: chat-db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    networks:
+      - private-net
+    volumes:
+      - chat-db-data:/var/lib/postgresql/data
+
+  backend:
+    build: ./chatapp-backend
+    container_name: chat-backend
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    networks:
+      - private-net
+    depends_on:
+      - db
+
+  frontend:
+    build: ./chatapp-frontend
+    container_name: chat-frontend
+    networks:
+      - public-net
+
+  reverse-proxy:
+    image: nginx:alpine
+    container_name: chat-reverse-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - public-net
+      - private-net
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  chat-db-data:
