@@ -1,7 +1,25 @@
-<app-room-selector-component (roomSelected)="onRoomSelected($event)"></app-room-selector-component>
+<main class="app-layout">
+  <aside class="sidebar">
+    <app-room-selector-component (roomSelected)="onRoomSelected($event)"></app-room-selector-component>
+  </aside>
 
-<app-chat-room-component
-  *ngIf="selectedRoomId"
-  [roomId]="selectedRoomId"
-  [username]="username">
-</app-chat-room-component>
+  <section class="chat-area">
+    <app-chat-room-component
+      *ngIf="selectedRoomId; else noRoomSelected"
+      [roomId]="selectedRoomId"
+      [username]="username">
+    </app-chat-room-component>
+    
+    <ng-template #noRoomSelected>
+      <div class="empty-state">
+        <div class="empty-state-content">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <h2>Sélectionnez un salon</h2>
+          <p>Choisissez un salon dans le menu de gauche pour commencer à discuter.</p>
+        </div>
+      </div>
+    </ng-template>
+  </section>
+</main>

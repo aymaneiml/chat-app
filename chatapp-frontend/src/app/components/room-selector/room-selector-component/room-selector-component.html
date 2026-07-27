@@ -1,5 +1,13 @@
-<ul>
-    <li *ngFor="let room of rooms">
-        <button (click)="selectRoom(room)">{{ room }}</button>
+<div class="room-selector-container">
+  <div class="sidebar-header">
+    <h2>Salons</h2>
+  </div>
+  <ul class="room-list">
+    <li *ngFor="let room of rooms" class="room-item">
+      <button (click)="selectRoom(room)" class="room-btn">
+        <span class="room-icon">#</span>
+        <span class="room-name">{{ room }}</span>
+      </button>
     </li>
-</ul>
+  </ul>
+</div>

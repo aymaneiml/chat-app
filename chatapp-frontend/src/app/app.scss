@@ -1,0 +1,55 @@
+.app-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-main);
+  position: relative;
+}
+
+.empty-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  
+  .empty-state-content {
+    text-align: center;
+    color: var(--text-muted);
+    max-width: 300px;
+    
+    svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    
+    h2 {
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    
+    p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
+}

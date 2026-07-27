@@ -1,18 +1,53 @@
-<p>Statut : {{ connectionStatus }}</p>
+<div class="chat-container">
+  <!-- Chat Header -->
+  <header class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-header-icon">#</div>
+      <h2 class="chat-title">{{ roomId }}</h2>
+    </div>
+    <div class="connection-status" [ngClass]="connectionStatus">
+      <span class="status-indicator"></span>
+      {{ connectionStatus === 'connected' ? 'Connecté' : (connectionStatus === 'connecting' ? 'Connexion...' : 'Déconnecté') }}
+    </div>
+  </header>
 
-<div>
-  <div *ngFor="let message of messages">
-    <ng-container [ngSwitch]="message.type">
-      <em *ngSwitchCase="'JOIN'">{{ message.sender }} a rejoint le salon</em>
-      <em *ngSwitchCase="'LEAVE'">{{ message.sender }} a quitté le salon</em>
-      <span *ngSwitchDefault><strong>{{ message.sender }} :</strong> {{ message.content }}</span>
-    </ng-container>
+  <!-- Messages Area -->
+  <div class="messages-area">
+    <div class="message-wrapper" *ngFor="let message of messages" [ngClass]="{'is-mine': message.sender === username, 'is-system': message.type !== 'CHAT'}">
+      
+      <ng-container *ngIf="message.type === 'CHAT'; else systemMessage">
+        <div class="message-bubble">
+          <div class="message-sender" *ngIf="message.sender !== username">{{ message.sender }}</div>
+          <div class="message-content">{{ message.content }}</div>
+        </div>
+      </ng-container>
+
+      <ng-template #systemMessage>
+        <div class="system-bubble">
+          <span *ngIf="message.type === 'JOIN'">👋 <strong>{{ message.sender }}</strong> a rejoint le salon</span>
+          <span *ngIf="message.type === 'LEAVE'">🚪 <strong>{{ message.sender }}</strong> a quitté le salon</span>
+        </div>
+      </ng-template>
+
+    </div>
   </div>
-</div>
 
-<input
-  [(ngModel)]="newMessageContent"
-  (keyup.enter)="sendMessage()"
-  placeholder="Écris un message..."
-/>
-<button (click)="sendMessage()">Envoyer</button>
+  <!-- Input Area -->
+  <footer class="chat-input-area">
+    <div class="input-wrapper">
+      <input
+        type="text"
+        [(ngModel)]="newMessageContent"
+        (keyup.enter)="sendMessage()"
+        placeholder="Envoyer un message dans #{{ roomId }}..."
+        class="message-input"
+      />
+      <button class="send-btn" (click)="sendMessage()" [disabled]="!newMessageContent.trim()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+  </footer>
+</div>
